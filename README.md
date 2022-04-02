@@ -1,56 +1,27 @@
-# docker-laravel 🐳
+# RSS Reader Demo
 
-<p align="center">
-    <img src="https://user-images.githubusercontent.com/35098175/145682384-0f531ede-96e0-44c3-a35e-32494bd9af42.png" alt="docker-laravel">
-</p>
-<p align="center">
-    <img src="https://github.com/ucan-lab/docker-laravel/actions/workflows/laravel-create-project.yml/badge.svg" alt="Test laravel-create-project.yml">
-    <img src="https://github.com/ucan-lab/docker-laravel/actions/workflows/laravel-git-clone.yml/badge.svg" alt="Test laravel-git-clone.yml">
-    <img src="https://img.shields.io/github/license/ucan-lab/docker-laravel" alt="License">
-</p>
+This application reads RSS feeds, allowing the user to import multiple channels and their items to the database
 
-## Introduction
-
-Build a simple laravel development environment with docker-compose. Compatible with Windows(WSL2), macOS(M1) and Linux.
-
-## Usage
-
-1. Click [Use this template](https://github.com/ucan-lab/docker-laravel/generate)
-2. Git clone & change directory
-3. Execute the following command
+To set up the application, bring the docker containers online, then on the application server container, run
 
 ```bash
-$ make create-project # Install the latest Laravel project
-$ make install-recommend-packages # Optional
+$ php artisan migrate:fresh
+$ php artisan rss:import
 ```
 
-http://localhost
+This will instantiate the data needed to display the default feed, which is the Official MotoGP News RSS Feed.
 
-## Tips
-
-- Read this [Makefile](https://github.com/ucan-lab/docker-laravel/blob/main/Makefile).
-- Read this [Wiki](https://github.com/ucan-lab/docker-laravel/wiki).
-
-## Container structures
+Additional or alternative RSS feeds can be imported by providing a valid RSS url to the import command:
 
 ```bash
-├── app
-├── web
-└── db
+$ php artisan rss:import http://example-feed.com/rss
 ```
 
-### app container
+For a quick check on RSS feeds, the read command can be used, which will output channel and item titles to the console.
+Once again, an optional parameter can be used to read a feed other than the default MotoGP one
 
-- Base image
-  - [php](https://hub.docker.com/_/php):8.1-fpm-bullseye
-  - [composer](https://hub.docker.com/_/composer):2.2
+```bash
+$ php artisan rss:read
+```
 
-### web container
-
-- Base image
-  - [nginx](https://hub.docker.com/_/nginx):1.20
-
-### db container
-
-- Base image
-  - [mysql/mysql-server](https://hub.docker.com/r/mysql/mysql-server):8.0
+Within the application, alt-clicking on any of the stories will display a button to view the article. Alt clicking again will dismiss this button.
