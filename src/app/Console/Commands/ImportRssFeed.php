@@ -37,7 +37,7 @@ class ImportRssFeed extends Command
 
         foreach($xml->channel as $xmlChannel)
         {
-            $dbChannel = Channel::create([
+            $dbChannel = Channel::updateOrCreate([
                 'title' => $xmlChannel->title,
                 'link' => $xmlChannel->link,
                 'description' => $xmlChannel->description,
@@ -46,7 +46,7 @@ class ImportRssFeed extends Command
 
             foreach($xmlChannel->item as $xmlItem)
             {
-                Item::create([
+                Item::updateOrCreate([
                     'channel_id' => $dbChannel->id,
                     'title' => $xmlItem->title,
                     'link' => $xmlItem->link,
