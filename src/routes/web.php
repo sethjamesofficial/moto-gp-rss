@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+route::get('/', [App\Http\Controllers\ChannelController::class, 'index'])->name('home');
+route::get('/channels', [App\Http\Controllers\ChannelController::class, 'index'])->name('channels.index');
+route::get('/channels/{channel}', [App\Http\Controllers\ChannelController::class, 'show'])->name('channels.show');
