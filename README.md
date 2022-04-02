@@ -31,4 +31,4 @@ Once again, an optional parameter can be used to read a feed other than the defa
 $ php artisan rss:read
 ```
 
-Within the application, alt-clicking on any of the stories will display a button to view the article. Alt clicking again will dismiss this button.
+The application itself can be accessed at localhost port 80. Within the application, alt-clicking on any of the stories within a channel will display a button to view the article. Alt clicking again will dismiss this button.
