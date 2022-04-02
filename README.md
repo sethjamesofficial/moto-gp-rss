@@ -2,7 +2,14 @@
 
 This application reads RSS feeds, allowing the user to import multiple channels and their items to the database
 
-To set up the application, bring the docker containers online, then on the application server container, run
+To set up the application, bring the docker containers online
+
+```bash
+$ docker compose build --no-cache --force-rm
+$ docker compose up -d
+```
+
+then on the application server container, run
 
 ```bash
 $ php artisan migrate:fresh
