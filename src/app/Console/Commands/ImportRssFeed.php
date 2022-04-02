@@ -37,23 +37,29 @@ class ImportRssFeed extends Command
 
         foreach($xml->channel as $xmlChannel)
         {
-            $dbChannel = Channel::updateOrCreate([
-                'title' => $xmlChannel->title,
-                'link' => $xmlChannel->link,
-                'description' => $xmlChannel->description,
-                'language' => $xmlChannel->language,
-            ]);
+            $dbChannel = Channel::updateOrCreate(
+                ['link' => $xmlChannel->link],
+                [
+                    'title' => $xmlChannel->title,
+                    'description' => $xmlChannel->description,
+                    'language' => $xmlChannel->language,
+                ]
+            );
 
             foreach($xmlChannel->item as $xmlItem)
             {
-                Item::updateOrCreate([
-                    'channel_id' => $dbChannel->id,
-                    'title' => $xmlItem->title,
-                    'link' => $xmlItem->link,
-                    'description' => $xmlItem->description,
-                    'pub_date' => Carbon::parse($xmlItem->pubDate),
-                    'image_link' => $xmlItem->image,
-                ]);
+                Item::updateOrCreate(
+                    [
+                        'link' => $xmlItem->link,
+                        'channel_id' => $dbChannel->id,
+                    ],
+                    [
+                        'title' => $xmlItem->title,
+                        'description' => $xmlItem->description,
+                        'pub_date' => Carbon::parse($xmlItem->pubDate),
+                        'image_link' => $xmlItem->image,
+                    ]
+                );
             }
         }
     }
